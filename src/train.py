@@ -54,7 +54,6 @@ class PositionalEncoding(nn.Module):
         self.register_buffer('pe', pe)
 
     def forward(self, x):
-        # x: (batch, seq_len, d_model)
         x = x + self.pe[:, :x.size(1)]
         return self.dropout(x)
 
@@ -249,7 +248,7 @@ def _handle_training_and_send(client_socket):
 
 def main():
     client = socket.socket()
-    SERVER_IP = '127.0.0.1'  # local (test için)
+    SERVER_IP = '127.0.0.1'
     SERVER_PORT = 12345
     try:
         client.connect((SERVER_IP, SERVER_PORT))

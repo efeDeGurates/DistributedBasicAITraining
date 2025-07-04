@@ -4,9 +4,11 @@ import pandas as pd
 import os
 import pickle
 import torch
+import time
 
 # Ayarlar
-DATA_FILE = "data.csv"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_FILE = os.path.abspath(os.path.join(BASE_DIR, "..", "datasets", "data.csv"))
 MODEL_SAVE_DIR = "received_models"
 VOCAB_SAVE_DIR = "received_vocabs"
 AGG_MODEL_PATH = "model/aggregated_model.pt"
@@ -312,18 +314,18 @@ def main():
             client_socket, addr = server.accept()
             print(f"[+] Yeni client bağlandı: {addr}")
             connected_clients.append((client_socket, addr))
+            threading.Thread(target=handle_client, args=(client_socket, addr), daemon=True).start()
 
     accept_thread = threading.Thread(target=accept_clients, daemon=True)
     accept_thread.start()
 
-    print("[i] Client bağlantıları için 5 saniye bekleniyor...")
-    threading.Event().wait(5.0)
-
-    print(f"[✓] {len(connected_clients)} client bağlandı. Eğitim başlatılıyor...")
-
-    for client_socket, addr in connected_clients:
-        threading.Thread(target=handle_client, args=(client_socket, addr), daemon=True).start()
-
+    print("[i] Client bağlantıları bekleniyor. Çıkmak için Ctrl+C...")
+    
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("[!] Sunucu kapatılıyor...")
 
 if __name__ == "__main__":
     main()

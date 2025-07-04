@@ -155,7 +155,7 @@ def google_search(query):
         link = result["organic_results"][0]["link"]
         return f"🔎 {snippet}\n📎 {link}"
     except:
-        return "Sonuç bulunamadı."
+        return "I didn't find result"
 
 # --- Web ---
 def assistant_response(soru):
