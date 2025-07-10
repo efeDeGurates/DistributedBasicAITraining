@@ -8,8 +8,12 @@ from serpapi import GoogleSearch
 import os
 import csv
 import tkinter as tk
+from dotenv import load_dotenv
 
-SERP_API_KEY = ""
+load_dotenv()
+
+serp_api_key = os.getenv("SERP_API_KEY")
+
 
 # --- Vocab sınıfı ---
 class Vocab:
@@ -147,7 +151,7 @@ def get_news():
 def google_search(query):
     params = {
         "q": query,
-        "api_key": SERP_API_KEY,
+        "api_key": serp_api_key,
         "hl": "tr",
         "gl": "tr"
     }
@@ -156,7 +160,7 @@ def google_search(query):
     try:
         snippet = result["organic_results"][0]["snippet"]
         link = result["organic_results"][0]["link"]
-        return f"🔎 {snippet}\n📎 {link}"
+        return f"{snippet}\n{link}"
     except:
         return "I didn't find result"
 
@@ -242,7 +246,7 @@ class RunnerGUI():
 
     def assistant_response(self, soru):
         soru_lower = soru.lower()
-        trigger_keywords = ["bugün", "şu an", "şuan", "nedir", "kaç", "hava", "dolar", "kimdir", "who", "how"]
+        trigger_keywords = ["What","who", "how"]
         for keyword in trigger_keywords:
             if keyword in soru_lower:
                 if "weather" in soru_lower:

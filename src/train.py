@@ -51,20 +51,20 @@ class ClientGUI():
         try:
             port = int(self.port_entry.get().strip())
         except ValueError:
-            self.log("[!] Invalid port")
+            self.log("Invalid port")
             return
 
         try:
             self.client_socket = socket.socket()
             self.client_socket.connect((ip, port))
-            self.log(f"[✓] Connected to {ip}:{port}")
+            self.log(f"Connected to {ip}:{port}")
 
             score = 10.0
             self.client_socket.sendall(f"SCORE:{score}\n".encode())
 
             threading.Thread(target=receive_data_and_train, args=(self.client_socket, self.log), daemon=True).start()
         except Exception as e:
-            self.log(f"[!] Connection error: {e}")
+            self.log(f"Connection error: {e}")
 
     def send_command(self):
         cmd = self.cmd_entry.get().strip()
@@ -73,7 +73,7 @@ class ClientGUI():
                 self.client_socket.sendall((cmd + "\n").encode())
                 self.cmd_entry.delete(0, tk.END)
             except:
-                self.log("[!] Failed to send command")
+                self.log("Failed to send command")
 
 
 # --- Vocab and Model Class ---
@@ -202,25 +202,25 @@ def send_file(client_socket, filepath, tag):
                     break
                 client_socket.sendall(chunk)
     except Exception as e:
-        print(f"[!] File send error: {e}")
+        print(f"File send error: {e}")
 
 
 def _handle_training_and_send(client_socket, log_func):
     try:
         enc_in, enc_out, vocab = load_data_and_prepare_vocab("received_data.csv")
     except Exception as e:
-        log_func(f"[!] Data error: {e}")
+        log_func(f"Data error: {e}")
         return
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = TransformerChatbot(len(vocab)).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.0005)
     loss_fn = nn.CrossEntropyLoss(ignore_index=vocab["<pad>"])
 
-    log_func("[*] Training started...")
+    log_func("Training started...")
     train(model, enc_in, enc_out, optimizer, loss_fn, vocab, log_func)
     torch.save(model.state_dict(), "trained_model.pt")
     save_vocab(vocab)
-    log_func("[✓] Model saved. Sending to server...")
+    log_func("Model saved. Sending to server...")
     send_file(client_socket, "trained_model.pt", "MODEL_UPLOAD")
     send_file(client_socket, "vocab_client.pkl", "VOCAB_UPLOAD")
 
@@ -232,7 +232,7 @@ def receive_data_and_train(client_socket, log_func):
         try:
             data = client_socket.recv(4096)
             if not data:
-                log_func("[!] Server disconnected.")
+                log_func("Server disconnected.")
                 break
             text = data.decode(errors='ignore')
             if "DATA_START" in text:
@@ -262,7 +262,7 @@ def receive_data_and_train(client_socket, log_func):
             else:
                 log_func(f"[Server]: {text.strip()}")
         except Exception as e:
-            log_func(f"[!] Receive error: {e}")
+            log_func(f"Receive error: {e}")
             break
 
 

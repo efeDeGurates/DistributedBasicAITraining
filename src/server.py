@@ -67,11 +67,11 @@ class ServerGUI:
         print(msg)
 
     def start_server(self):
-        self.log(f"[i] Sunucu başlatılıyor...")
-        self.log(f"[i] Eğitim seti: {self.dataset_path_var.get()}")
-        self.log(f"[i] Epoch sayısı: {self.epoch_var.get()}")
-        self.log(f"[i] Batch size: {self.batch_var.get()}")
-        self.log(f"[i] Öğrenme oranı: {self.lr_var.get()}")
+        self.log(f"Sunucu başlatılıyor...")
+        self.log(f"Eğitim seti: {self.dataset_path_var.get()}")
+        self.log(f"Epoch sayısı: {self.epoch_var.get()}")
+        self.log(f"Batch size: {self.batch_var.get()}")
+        self.log(f"Öğrenme oranı: {self.lr_var.get()}")
 
         global DATA_FILE, EPOCHS, BATCH_SIZE, LEARNING_RATE
         DATA_FILE = self.dataset_path_var.get()
@@ -145,25 +145,25 @@ def send_dataset(client_socket, df_slice, log):
         client_socket.sendall(b"DATA_START")
         client_socket.sendall(csv_str.encode('utf-8'))
         client_socket.sendall(b"DATA_END")
-        log(f"[+] Veri gönderildi: {clients[client_socket]['addr']}")
+        log(f"Veri gönderildi: {clients[client_socket]['addr']}")
     except Exception as e:
-        log(f"[!] Veri gönderme hatası: {e}")
+        log(f"Veri gönderme hatası: {e}")
 
 def broadcast_datasets(log):
     global clients
     with lock:
         if not clients:
-            log("[!] Bağlı client yok, veri gönderilemiyor.")
+            log("Bağlı client yok, veri gönderilemiyor.")
             return
 
         sorted_clients = sorted(clients.items(), key=lambda x: x[1]["score"], reverse=True)
         total_score = sum([info["score"] for _, info in sorted_clients])
-        log(f"[+] Toplam skor: {total_score}, Client sayısı: {len(sorted_clients)}")
+        log(f"Toplam skor: {total_score}, Client sayısı: {len(sorted_clients)}")
 
         try:
             df = pd.read_csv(DATA_FILE)
         except Exception as e:
-            log(f"[!] DATA_FILE okunurken hata: {e}")
+            log(f"DATA_FILE okunurken hata: {e}")
             return
 
         total_len = len(df)
@@ -183,57 +183,57 @@ def broadcast_datasets(log):
 
 def receive_model(client_socket, filename, filesize, log):
     filepath = os.path.join(MODEL_SAVE_DIR, filename)
-    log(f"[+] Model alınıyor: {filename} ({filesize} byte)")
+    log(f"Model alınıyor: {filename} ({filesize} byte)")
     data = recv_exactly(client_socket, filesize)
     try:
         with open(filepath, "wb") as f:
             f.write(data)
     except Exception as e:
-        log(f"[!] Model yazma hatası: {e}")
+        log(f"Model yazma hatası: {e}")
         return False
 
     try:
         state_dict = torch.load(filepath, map_location=torch.device('cpu'))
         with lock:
             models[client_socket] = state_dict
-        log(f"[✓] Model yüklendi: {filepath}")
+        log(f"Model yüklendi: {filepath}")
         return True
     except Exception as e:
-        log(f"[!] Model yükleme hatası: {e}")
+        log(f"Model yükleme hatası: {e}")
         return False
 
 def receive_vocab(client_socket, filename, filesize, log):
     filepath = os.path.join(VOCAB_SAVE_DIR, filename)
-    log(f"[+] Vocab alınıyor: {filename} ({filesize} byte)")
+    log(f"Vocab alınıyor: {filename} ({filesize} byte)")
     data = recv_exactly(client_socket, filesize)
     try:
         with open(filepath, "wb") as f:
             f.write(data)
     except Exception as e:
-        log(f"[!] Vocab yazma hatası: {e}")
+        log(f"Vocab yazma hatası: {e}")
         return False
     try:
         vocab_obj = pickle.loads(data)
         with lock:
             vocabs[client_socket] = vocab_obj
-        log(f"[✓] Vocab yüklendi: {filepath}")
+        log(f"Vocab yüklendi: {filepath}")
         return True
     except Exception as e:
-        log(f"[!] Vocab yükleme hatası: {e}")
+        log(f"Vocab yükleme hatası: {e}")
         return False
 
 def aggregate_models(log):
     if not models:
-        log("[!] Birleştirilecek model yok.")
+        log("Birleştirilecek model yok.")
         return
-    log(f"[+] {len(models)} model birleştiriliyor...")
+    log(f"{len(models)} model birleştiriliyor...")
     model_keys = list(next(iter(models.values())).keys())
     aggregated_state_dict = {key: sum(m[key] for m in models.values()) / len(models) for key in model_keys}
     try:
         torch.save(aggregated_state_dict, AGG_MODEL_PATH)
-        log(f"[✓] Model kaydedildi: {AGG_MODEL_PATH}")
+        log(f"Model kaydedildi: {AGG_MODEL_PATH}")
     except Exception as e:
-        log(f"[!] Model kaydedilemedi: {e}")
+        log(f"Model kaydedilemedi: {e}")
 
 def aggregate_vocabs(log):
     all_vocabs = []
@@ -244,9 +244,9 @@ def aggregate_vocabs(log):
                 if isinstance(obj, Vocab):
                     all_vocabs.append(obj)
         except Exception as e:
-            log(f"[!] Vocab hatası: {e}")
+            log(f"Vocab hatası: {e}")
     if not all_vocabs:
-        log("[!] Vocab bulunamadı.")
+        log("Vocab bulunamadı.")
         return
     merged = Vocab()
     for v in all_vocabs:
@@ -255,14 +255,14 @@ def aggregate_vocabs(log):
     try:
         with open(AGG_VOCAB_PATH, "wb") as f:
             pickle.dump(merged, f)
-        log(f"[✓] Vocab kaydedildi: {AGG_VOCAB_PATH}")
+        log(f"Vocab kaydedildi: {AGG_VOCAB_PATH}")
     except Exception as e:
-        log(f"[!] Vocab kaydedilemedi: {e}")
+        log(f"Vocab kaydedilemedi: {e}")
 
 def handle_client(client_socket, addr, log):
     peer_id = f"{addr[0]}:{addr[1]}"
     clients[client_socket] = {"addr": peer_id, "score": 0.0, "data_slice": None}
-    log(f"[+] Yeni bağlantı: {peer_id}")
+    log(f"+ Yeni bağlantı: {peer_id}")
 
     try:
         while True:
