@@ -1,0 +1,523 @@
+,input,output
+0,"hi, how are you doing?",i'm fine. how about yourself?
+1,i'm fine. how about yourself?,i'm pretty good. thanks for asking.
+2,i'm pretty good. thanks for asking.,no problem. so how have you been?
+3,no problem. so how have you been?,i've been great. what about you?
+4,i've been great. what about you?,i've been good. i'm in school right now.
+5,i've been good. i'm in school right now.,what school do you go to?
+6,what school do you go to?,i go to pcc.
+7,i go to pcc.,do you like it there?
+8,do you like it there?,it's okay. it's a really big campus.
+9,it's okay. it's a really big campus.,good luck with school.
+10,good luck with school.,thank you very much.
+11,how's it going?,i'm doing well. how about you?
+12,i'm doing well. how about you?,"never better, thanks."
+13,"never better, thanks.",so how have you been lately?
+14,so how have you been lately?,i've actually been pretty good. you?
+15,i've actually been pretty good. you?,i'm actually in school right now.
+16,i'm actually in school right now.,which school do you attend?
+17,which school do you attend?,i'm attending pcc right now.
+18,i'm attending pcc right now.,are you enjoying it there?
+19,are you enjoying it there?,it's not bad. there are a lot of people there.
+20,it's not bad. there are a lot of people there.,good luck with that.
+21,good luck with that.,thanks.
+22,how are you doing today?,i'm doing great. what about you?
+23,i'm doing great. what about you?,"i'm absolutely lovely, thank you."
+24,"i'm absolutely lovely, thank you.",everything's been good with you?
+25,everything's been good with you?,i haven't been better. how about yourself?
+26,i haven't been better. how about yourself?,i started school recently.
+27,i started school recently.,where are you going to school?
+28,where are you going to school?,i'm going to pcc.
+29,i'm going to pcc.,how do you like it so far?
+30,how do you like it so far?,i like it so far. my classes are pretty good right now.
+31,i like it so far. my classes are pretty good right now.,i wish you luck.
+32,it's an ugly day today.,i know. i think it may rain.
+33,i know. i think it may rain.,"it's the middle of summer, it shouldn't rain today."
+34,"it's the middle of summer, it shouldn't rain today.",that would be weird.
+35,that would be weird.,"yeah, especially since it's ninety degrees outside."
+36,"yeah, especially since it's ninety degrees outside.","i know, it would be horrible if it rained and it was hot outside."
+37,"i know, it would be horrible if it rained and it was hot outside.","yes, it would be. "
+38,"yes, it would be. ",i really wish it wasn't so hot every day. 
+39,i really wish it wasn't so hot every day. ,me too. i can't wait until winter.
+40,me too. i can't wait until winter.,"i like winter too, but sometimes it gets too cold."
+41,"i like winter too, but sometimes it gets too cold.",i'd rather be cold than hot.
+42,i'd rather be cold than hot.,me too.
+43,it doesn't look very nice outside today.,you're right. i think it's going to rain later.
+44,you're right. i think it's going to rain later.,"in the middle of the summer, it shouldn't be raining."
+45,"in the middle of the summer, it shouldn't be raining.",that wouldn't seem right.
+46,that wouldn't seem right.,"considering that it's over ninety degrees outside, that would be weird."
+47,"considering that it's over ninety degrees outside, that would be weird.","exactly, it wouldn't be nice if it started raining. it's too hot."
+48,"exactly, it wouldn't be nice if it started raining. it's too hot.","i know, you're absolutely right."
+49,"i know, you're absolutely right.",i wish it would cool off one day.
+50,i wish it would cool off one day.,"that's how i feel, i want winter to come soon."
+51,"that's how i feel, i want winter to come soon.","i enjoy the winter, but it gets really cold sometimes."
+52,"i enjoy the winter, but it gets really cold sometimes.","i know what you mean, but i'd rather be cold than hot."
+53,"i know what you mean, but i'd rather be cold than hot.",that's exactly how i feel.
+54,i wish it was a nicer day today.,that is true. i hope it doesn't rain.
+55,that is true. i hope it doesn't rain.,it wouldn't rain in the middle of the summer.
+56,it wouldn't rain in the middle of the summer.,it wouldn't seem right if it started raining right now.
+57,it wouldn't seem right if it started raining right now.,it would be weird if it started raining in ninety degree weather.
+58,it would be weird if it started raining in ninety degree weather.,any rain right now would be pointless.
+59,any rain right now would be pointless.,"that's right, it really would be."
+60,"that's right, it really would be.",i want it to cool down some.
+61,i want it to cool down some.,"i know what you mean, i can't wait until it's winter."
+62,"i know what you mean, i can't wait until it's winter.",winter is great. i wish it didn't get so cold sometimes though.
+63,winter is great. i wish it didn't get so cold sometimes though.,i would rather deal with the winter than the summer.
+64,it's such a nice day.,"yes, it is."
+65,"yes, it is.",it looks like it may rain soon.
+66,it looks like it may rain soon.,"yes, and i hope that it does."
+67,"yes, and i hope that it does.",why is that?
+68,why is that?,i really love how rain clears the air.
+69,i really love how rain clears the air.,me too. it always smells so fresh after it rains.
+70,me too. it always smells so fresh after it rains.,"yes, but i love the night air after it rains."
+71,"yes, but i love the night air after it rains.",really? why is it?
+72,really? why is it?,because you can see the stars perfectly.
+73,because you can see the stars perfectly.,i really hope it rains today.
+74,i really hope it rains today.,"yeah, me too."
+75,isn't it a nice day?,it really is.
+76,it really is.,it seems that it may rain today.
+77,it seems that it may rain today.,hopefully it will.
+78,hopefully it will.,how come?
+79,how come?,i like how clear the sky gets after it rains.
+80,i like how clear the sky gets after it rains.,i feel the same way. it smells so good after it rains.
+81,i feel the same way. it smells so good after it rains.,i especially love the night air when it rains.
+82,i especially love the night air when it rains.,really? why?
+83,really? why?,the stars look so much closer after it rains.
+84,the stars look so much closer after it rains.,i really want it to rain today.
+85,i really want it to rain today.,"yeah, so do i."
+86,don't you think it's nice out?,"yes, i think so too."
+87,"yes, i think so too.",i think that it's going to rain.
+88,i think that it's going to rain.,i hope that it does rain.
+89,i hope that it does rain.,you like the rain?
+90,you like the rain?,the sky looks so clean after it rains. i love it.
+91,the sky looks so clean after it rains. i love it.,i understand. rain does make it smell cleaner.
+92,i understand. rain does make it smell cleaner.,i love most how it is at night after it rains.
+93,i love most how it is at night after it rains.,how come?
+94,how come?,you can see the stars so much more clearly after it rains.
+95,you can see the stars so much more clearly after it rains.,i would love for it to rain today.
+96,i really want to go to the beach this weekend.,that sounds like fun. what's the weather going to be like?
+97,that sounds like fun. what's the weather going to be like?,i heard that it's going to be warm this weekend.
+98,i heard that it's going to be warm this weekend.,is it going to be perfect beach weather?
+99,is it going to be perfect beach weather?,i believe so.
+100,i believe so.,good. i hope it doesn't cool off this weekend.
+101,good. i hope it doesn't cool off this weekend.,i know. i really want to go to the beach.
+102,i know. i really want to go to the beach.,but you know that california weather is really unpredictable.
+103,but you know that california weather is really unpredictable.,"you're right. one minute it's hot, and then the next minute it's cold."
+104,"you're right. one minute it's hot, and then the next minute it's cold.",i really wish the weather would just stay the same.
+105,i really wish the weather would just stay the same.,i do too. that way we can have our activities planned ahead of time.
+106,i do too. that way we can have our activities planned ahead of time.,"yeah, that would make things a lot easier."
+107,i would like to take a trip to the beach this weekend.,a trip to the beach would be fun. how is the weather going to be?
+108,a trip to the beach would be fun. how is the weather going to be?,the forecast says that it will be warm on the weekend.
+109,the forecast says that it will be warm on the weekend.,so do you think it'll be perfect weather for the beach?
+110,so do you think it'll be perfect weather for the beach?,it sounds like it will be.
+111,it sounds like it will be.,i really hope it doesn't get cold.
+112,i really hope it doesn't get cold.,"that would ruin things, i want to go so badly."
+113,"that would ruin things, i want to go so badly.","the weather in california is unpredictable, so you never know."
+114,"the weather in california is unpredictable, so you never know.",that is true. the weather is constantly changing.
+115,that is true. the weather is constantly changing.,it would be nice if the weather would never change.
+116,it would be nice if the weather would never change.,"that would be great, then we could plan things sooner."
+117,"that would be great, then we could plan things sooner.",true. predictable weather would make life easier.
+118,it would be nice to go to the beach sometime this weekend.,what's the weather going to be like? i may want to go too.
+119,what's the weather going to be like? i may want to go too.,the weather this weekend is supposed to be warm.
+120,the weather this weekend is supposed to be warm.,will it be good beach weather?
+121,will it be good beach weather?,i think it will be.
+122,i think it will be.,it wouldn't be good if it got cold this weekend.
+123,it wouldn't be good if it got cold this weekend.,"i want this trip to be perfect, i hope it stays warm."
+124,"i want this trip to be perfect, i hope it stays warm.","this california weather is so uncertain, it's impossible to know what'll happen."
+125,"this california weather is so uncertain, it's impossible to know what'll happen.",i know. every day the weather seems different.
+126,i know. every day the weather seems different.,i would love it if it wasn't always so unpredictable.
+127,i would love it if it wasn't always so unpredictable.,that would make it easier for us to make plans.
+128,"hello, may i speak to alice please?",this is she. how's it going?
+129,this is she. how's it going?,i've been trying to call you all day.
+130,i've been trying to call you all day.,sorry about that. i was cleaning up.
+131,sorry about that. i was cleaning up.,it's okay.
+132,it's okay.,so what were you calling me about?
+133,so what were you calling me about?,"oh, i just wanted to see if you wanted to hang out tomorrow."
+134,"oh, i just wanted to see if you wanted to hang out tomorrow.","sure, what did you want to do?"
+135,"sure, what did you want to do?",maybe we can go see a movie or something.
+136,maybe we can go see a movie or something.,that sounds like fun. let's do it.
+137,that sounds like fun. let's do it.,i'll see you tomorrow then.
+138,i'll see you tomorrow then.,see you then. goodbye.
+139,"hi, how are you. is alice there?",speaking. what's up?
+140,speaking. what's up?,why haven't you answered the phone?
+141,why haven't you answered the phone?,"my bad, i had chores to do."
+142,"my bad, i had chores to do.",that's all right.
+143,that's all right.,what was the reason for your call?
+144,what was the reason for your call?,i want to do something tomorrow with you.
+145,i want to do something tomorrow with you.,sounds good. what did you have in mind?
+146,sounds good. what did you have in mind?,i was thinking about seeing a movie.
+147,i was thinking about seeing a movie.,"okay, let's go see a movie."
+148,"okay, let's go see a movie.",until then.
+149,until then.,talk to you later.
+150,is alice available?,you're talking to her.
+151,you're talking to her.,i've called you a hundred times today.
+152,i've called you a hundred times today.,i was busy doing something. i apologize.
+153,i was busy doing something. i apologize.,no problem.
+154,no problem.,did you need something?
+155,did you need something?,do you want to do something tomorrow?
+156,do you want to do something tomorrow?,is there somewhere special you wanted to go?
+157,is there somewhere special you wanted to go?,how about a movie?
+158,how about a movie?,a movie sounds good.
+159,a movie sounds good.,call me tomorrow then.
+160,have you seen the new girl in school?,"no, i haven't."
+161,"no, i haven't.",she's really pretty.
+162,she's really pretty.,describe her to me.
+163,describe her to me.,she's not too tall.
+164,she's not too tall.,"well, how tall is she?"
+165,"well, how tall is she?",she's about five feet even.
+166,she's about five feet even.,"what does she look like, though?"
+167,"what does she look like, though?",she has pretty light brown eyes.
+168,she has pretty light brown eyes.,i may know which girl you're talking about.
+169,i may know which girl you're talking about.,so you have seen her around?
+170,so you have seen her around?,"yes, i have."
+171,"there's a new girl in school, have you seen her yet?",i haven't seen her yet.
+172,i haven't seen her yet.,i think that she is very pretty.
+173,i think that she is very pretty.,tell me how she looks.
+174,tell me how she looks.,she's kind of short.
+175,she's kind of short.,what height is she?
+176,what height is she?,she's probably about five feet.
+177,she's probably about five feet.,"that's nice, but tell me what she looks like."
+178,"that's nice, but tell me what she looks like.",the first thing i noticed was her beautiful brown eyes.
+179,the first thing i noticed was her beautiful brown eyes.,i think i might've bumped into her before.
+180,i think i might've bumped into her before.,are you telling me that you've seen her before?
+181,are you telling me that you've seen her before?,i believe so.
+182,have you met the new girl?,no. have you?
+183,no. have you?,she's one of the prettiest girls at the school.
+184,she's one of the prettiest girls at the school.,what does she look like?
+185,what does she look like?,"well, she's quite short."
+186,"well, she's quite short.",how tall would you say that she is?
+187,how tall would you say that she is?,i would say she's only five feet.
+188,i would say she's only five feet.,what about her facial features?
+189,what about her facial features?,"she has light brown eyes, absolutely beautiful."
+190,"she has light brown eyes, absolutely beautiful.",i think i know who you're talking about.
+191,i think i know who you're talking about.,have you seen her?
+192,why weren't you at school yesterday?,i wasn't really feeling well.
+193,i wasn't really feeling well.,what was wrong with you?
+194,what was wrong with you?,my stomach was upset.
+195,my stomach was upset.,do you feel better now?
+196,do you feel better now?,i don't really feel too well yet.
+197,i don't really feel too well yet.,do you want anything to make you feel better?
+198,do you want anything to make you feel better?,"no, thanks. i already took some medicine."
+199,"no, thanks. i already took some medicine.",i hope you feel better.
+200,i hope you feel better.,thank you.
+201,what reason do you have for missing school?,i was sick.
+202,i was sick.,how were you sick?
+203,how were you sick?,i had a stomachache.
+204,i had a stomachache.,did it get any better?
+205,did it get any better?,i'm still feeling under the weather.
+206,i'm still feeling under the weather.,would you like anything for your stomach?
+207,would you like anything for your stomach?,i took something earlier.
+208,i took something earlier.,get better.
+209,get better.,thanks a lot.
+210,why didn't you go to school yesterday?,i stayed home because i wasn't feeling well.
+211,i stayed home because i wasn't feeling well.,what was your problem?
+212,what was your problem?,my stomach was bothering me.
+213,my stomach was bothering me.,are you feeling any better?
+214,are you feeling any better?,i'm still feeling a little sick.
+215,i'm still feeling a little sick.,"i'm going to the store, would you like any pepto bismol?"
+216,"i'm going to the store, would you like any pepto bismol?",that's okay.
+217,that's okay.,i hope you feel better.
+218,did you hear the good news?,"no, i haven't."
+219,"no, i haven't.",i got a promotion at my job.
+220,i got a promotion at my job.,did you really?
+221,did you really?,"seriously, i am so excited."
+222,"seriously, i am so excited.","well, congratulations."
+223,"well, congratulations.",thank you.
+224,thank you.,i'm so happy for you.
+225,i'm so happy for you.,really?
+226,really?,yes. you really deserved this.
+227,yes. you really deserved this.,you think so?
+228,you think so?,yes. good for you.
+229,have you heard my good news?,you haven't told me anything yet.
+230,you haven't told me anything yet.,i got a promotion at work earlier this week.
+231,i got a promotion at work earlier this week.,is that right?
+232,is that right?,it's the truth. i am really happy.
+233,it's the truth. i am really happy.,congratulations on your promotion.
+234,congratulations on your promotion.,thank you very much.
+235,thank you very much.,i am really excited for you.
+236,i am really excited for you.,are you really?
+237,are you really?,i'm serious. you deserved this promotion.
+238,i'm serious. you deserved this promotion.,is that what you really think?
+239,is that what you really think?,"yes, i do."
+240,"i haven't told you what happened yet, have i?",i haven't heard anything.
+241,i haven't heard anything.,"my boss offered me a promotion, and i took it."
+242,"my boss offered me a promotion, and i took it.",are you serious?
+243,are you serious?,"yes, i am really excited."
+244,"yes, i am really excited.",that's great. congratulations.
+245,that's great. congratulations.,i appreciate that.
+246,i appreciate that.,you have no idea how happy i am for you.
+247,you have no idea how happy i am for you.,for real?
+248,you look really nice today. ,thank you. i just got this outfit the other day.
+249,thank you. i just got this outfit the other day.,"really, where did you get it?"
+250,"really, where did you get it?",i got it from macy's.
+251,i got it from macy's.,it's really nice.
+252,it's really nice.,"thanks again. you look nice today, too."
+253,"thanks again. you look nice today, too.",thank you. i just got these shoes today.
+254,thank you. i just got these shoes today.,really? what kind of shoes are they?
+255,really? what kind of shoes are they?,these are called all star chuck taylors.
+256,these are called all star chuck taylors.,i really like those. how much did they cost?
+257,i really like those. how much did they cost?,they were about forty dollars.
+258,they were about forty dollars.,i think i'm going to go buy myself a pair.
+259,i absolutely love what you're wearing today.,you do? i just bought this outfit a couple days ago.
+260,you do? i just bought this outfit a couple days ago.,"seriously, it looks really nice on you. where did you buy it from?"
+261,"seriously, it looks really nice on you. where did you buy it from?",i bought it from the macy's at the santa anita mall.
+262,i bought it from the macy's at the santa anita mall.,i really like that outfit.
+263,i really like that outfit.,"thanks. i think you look nice today, too."
+264,"thanks. i think you look nice today, too.",thank you. i just bought these new shoes earlier today.
+265,thank you. i just bought these new shoes earlier today.,those are nice. what are they?
+266,those are nice. what are they?,these are some chucks.
+267,these are some chucks.,those are great. how much were they?
+268,those are great. how much were they?,i got them for forty.
+269,i got them for forty.,i think i might go and find me my own pair of chucks.
+270,i think that you look very cute today.,is that right? this is a brand new outfit.
+271,is that right? this is a brand new outfit.,what store did you get it from?
+272,what store did you get it from?,i went to macy's and picked it out.
+273,i went to macy's and picked it out.,i love your outfit right now.
+274,i love your outfit right now.,"well, i think you look nice today too."
+275,"well, i think you look nice today too.",thanks. i found these new shoes earlier at the store.
+276,thanks. i found these new shoes earlier at the store.,i think that those are some really nice shoes. what kind are they?
+277,i think that those are some really nice shoes. what kind are they?,these are chucks.
+278,these are chucks.,your shoes look really nice. how much did you get them for?
+279,your shoes look really nice. how much did you get them for?,they only cost me about forty dollars.
+280,"tell me, what do you enjoy doing in your spare time?",i enjoy drawing and painting.
+281,i enjoy drawing and painting.,you know how to draw and paint?
+282,you know how to draw and paint?,"yes, i do."
+283,"yes, i do.",when did you learn how to do that?
+284,when did you learn how to do that?,i learned back in high school.
+285,i learned back in high school.,"oh, so you took an art class?"
+286,"oh, so you took an art class?","yeah, i loved that class."
+287,"yeah, i loved that class.",i see that you're pretty talented.
+288,i see that you're pretty talented.,thank you very much.
+289,thank you very much.,i wish i had a talent like that.
+290,i wish i had a talent like that.,i'm sure you have a talent. it's just hidden.
+291,what kinds of things do you like to do?,i've always liked to draw and paint.
+292,i've always liked to draw and paint.,i didn't know you knew how to draw and paint.
+293,i didn't know you knew how to draw and paint.,i do it every once in a while.
+294,i do it every once in a while.,how long have you known how to do that?
+295,how long have you known how to do that?,i first learned how to do it in high school.
+296,i first learned how to do it in high school.,did you take some sort of art class or something?
+297,did you take some sort of art class or something?,that was my favorite class.
+298,that was my favorite class.,you have got to be talented.
+299,you have got to be talented.,thanks.
+300,thanks.,if only i was talented.
+301,if only i was talented.,you have a talent. you just don't know what it is yet.
+302,are there any hobbies you do?,"when i have time, i sometimes draw and paint."
+303,"when i have time, i sometimes draw and paint.","oh, you actually do that?"
+304,"oh, you actually do that?","every so often, i do."
+305,"every so often, i do.",did you always know how to draw and paint?
+306,did you always know how to draw and paint?,i was taught in high school how to draw and paint.
+307,i was taught in high school how to draw and paint.,you had an art class?
+308,you had an art class?,"exactly, it was my favorite class."
+309,"exactly, it was my favorite class.","well, it's good that you're so talented."
+310,"well, it's good that you're so talented.",i appreciate that.
+311,i appreciate that.,"talent is a great thing, i wish i had one."
+312,what's your favorite movie?,my favorite movie is superbad.
+313,my favorite movie is superbad.,"oh, why is that?"
+314,"oh, why is that?",it's the funniest movie that i've ever seen.
+315,it's the funniest movie that i've ever seen.,that's true. it is a very funny movie.
+316,that's true. it is a very funny movie.,you've seen it before? 
+317,you've seen it before? ,"yes, i saw that movie the first day it came out in theaters."
+318,"yes, i saw that movie the first day it came out in theaters.",didn't you laugh through the whole movie? i did.
+319,didn't you laugh through the whole movie? i did.,me too. that movie brought tears to my eyes.
+320,me too. that movie brought tears to my eyes.,mine too.
+321,mine too.,i have it on dvd at my house if you want to come over and watch it.
+322,i have it on dvd at my house if you want to come over and watch it.,"sure, let's go."
+323,which movie is your favorite to watch?,"i have to say, my favorite movie is superbad."
+324,"i have to say, my favorite movie is superbad.",is that right? why?
+325,is that right? why?,"honestly, it is one of the funniest movies i've seen in a long time."
+326,"honestly, it is one of the funniest movies i've seen in a long time.",you're right. that movie is hilarious.
+327,you're right. that movie is hilarious.,i didn't think you saw that movie.
+328,i didn't think you saw that movie.,i went to see it the day it came out.
+329,i went to see it the day it came out.,i was laughing through the whole movie.
+330,i was laughing through the whole movie.,"i couldn't help laughing, either. "
+331,"i couldn't help laughing, either. ",same here.
+332,same here.,i bought the movie. would you like to come to my house and watch it?
+333,i bought the movie. would you like to come to my house and watch it?,of course.
+334,"out of every movie that you've seen, which one is your favorite?",i'm going to have to say that superbad is the best movie ever.
+335,i'm going to have to say that superbad is the best movie ever.,"you think so, how come?"
+336,"you think so, how come?","well, superbad is super funny."
+337,"well, superbad is super funny.","you're not lying, i found that movie absolutely hilarious."
+338,"you're not lying, i found that movie absolutely hilarious.",i didn't know that you saw superbad before.
+339,i didn't know that you saw superbad before.,i made sure to be in line to see it the first day it came out.
+340,i made sure to be in line to see it the first day it came out.,i couldn't keep from laughing throughout the whole movie.
+341,i couldn't keep from laughing throughout the whole movie.,i was laughing hysterically the whole time; my stomach muscles hurt afterwards.
+342,i was laughing hysterically the whole time; my stomach muscles hurt afterwards.,that's exactly how i felt.
+343,that's exactly how i felt.,"i got the movie when it came out on dvd, do you want to come over?"
+344,what type of music do you like to listen to?,i like listening to different kinds of music.
+345,i like listening to different kinds of music.,"like what, for instance?"
+346,"like what, for instance?",i enjoy rock and r&b.
+347,i enjoy rock and r&b.,why is that?
+348,why is that?,i like the different instruments that they use.
+349,i like the different instruments that they use.,that's a good reason to like something.
+350,that's a good reason to like something.,"yeah, i think so too."
+351,what kind of music do you enjoy listening to?,i enjoy listening to all kinds of music.
+352,i enjoy listening to all kinds of music.,what kind?
+353,what kind?,i like to listen to rock and r&b.
+354,i like to listen to rock and r&b.,why do you like that type of music?
+355,why do you like that type of music?,i like the kinds of instruments that they use.
+356,i like the kinds of instruments that they use.,i think that's an excellent reason to like something.
+357,i think that's an excellent reason to like something.,"thanks, i feel the same way."
+358,what is your favorite kind of music?,i listen to various types of music.
+359,i listen to various types of music.,what genres?
+360,what genres?,i enjoy listening to both rock and r&b.
+361,i enjoy listening to both rock and r&b.,what interests you in that type of music?
+362,what interests you in that type of music?,i enjoy the different types of instruments that they use.
+363,i enjoy the different types of instruments that they use.,that is a perfect reason to like a certain kind of music.
+364,did you go to the basketball game on friday?,"no, i couldn't make it."
+365,"no, i couldn't make it.",you missed a really good game.
+366,you missed a really good game.,"oh, really? who won?"
+367,"oh, really? who won?",our school did. they played really well.
+368,our school did. they played really well.,too bad i was busy. i really wanted to go.
+369,too bad i was busy. i really wanted to go.,"yeah, you should have. it was really exciting."
+370,"yeah, you should have. it was really exciting.",so what was the score?
+371,so what was the score?,the score was 101-98.
+372,the score was 101-98.,"man, that was a really close game."
+373,"man, that was a really close game.",that's what made it so great.
+374,that's what made it so great.,i'll make sure and make it to the next one.
+375,were you able to attend friday night's basketball game?,i was unable to make it.
+376,i was unable to make it.,you should have been there. it was intense.
+377,you should have been there. it was intense.,is that right. who ended up winning?
+378,is that right. who ended up winning?,our team was victorious.
+379,our team was victorious.,i wish i was free that night. i'm kind of mad that i didn't go.
+380,i wish i was free that night. i'm kind of mad that i didn't go.,it was a great game.
+381,it was a great game.,what was the score at the end of the game?
+382,what was the score at the end of the game?,our team won 101-98.
+383,our team won 101-98.,sounds like it was a close game.
+384,sounds like it was a close game.,that's the reason it was such a great game.
+385,that's the reason it was such a great game.,"the next game, i will definitely be there."
+386,i was meaning to ask you if you saw the basketball game on friday.,"i wanted to go, but i couldn't."
+387,"i wanted to go, but i couldn't.",it was a great game.
+388,it was a great game.,it's too bad that i couldn't make it. who won?
+389,it's too bad that i couldn't make it. who won?,our team played hard and won.
+390,our team played hard and won.,i really wish i went to the game.
+391,i really wish i went to the game.,it was the best game ever.
+392,it was the best game ever.,so tell me the final score.
+393,so tell me the final score.,"the other team lost by three points, 101-98. "
+394,"the other team lost by three points, 101-98. ",it must've been a close game.
+395,it must've been a close game.,it really was. you should've gone.
+396,what are you doing this weekend?,i'm going to the movies with a friend. how about you?
+397,i'm going to the movies with a friend. how about you?,i'm not sure yet.
+398,i'm not sure yet.,"well, did you want to go see a movie with me?"
+399,"well, did you want to go see a movie with me?",what movie are you going to see?
+400,what movie are you going to see?,i'm not sure yet. is there something you want to see?
+401,i'm not sure yet. is there something you want to see?,there's nothing i can think of.
+402,there's nothing i can think of.,"so, did you want to go?"
+403,"so, did you want to go?","no, thanks, maybe another time."
+404,"no, thanks, maybe another time.","okay, sounds good."
+405,do you know what you're going to do this weekend?,i am going to see a movie with a friend of mine. what about you?
+406,i am going to see a movie with a friend of mine. what about you?,i don't know.
+407,i don't know.,would you like to see a movie with me and my friend?
+408,would you like to see a movie with me and my friend?,do you know what movie you're going to watch?
+409,do you know what movie you're going to watch?,"i don't know, but was there a certain movie you wanted to see?"
+410,"i don't know, but was there a certain movie you wanted to see?",none that i can think of.
+411,none that i can think of.,"well, would you like to go?"
+412,"well, would you like to go?","thank you for inviting me, but i think i'll pass."
+413,"thank you for inviting me, but i think i'll pass.",all right. another time then.
+414,you have any ideas as to what you want to do this weekend?,i'm going to the movie theater with my friend. what are you going to do?
+415,i'm going to the movie theater with my friend. what are you going to do?,i'm not quite sure yet.
+416,i'm not quite sure yet.,how about you see a movie with me and my friend?
+417,how about you see a movie with me and my friend?,what movie are you and your friend planning on watching?
+418,what movie are you and your friend planning on watching?,not sure. is there a movie out that catches your eye?
+419,not sure. is there a movie out that catches your eye?,no good movies come to mind.
+420,no good movies come to mind.,have you decided whether or not you would like to go?
+421,have you decided whether or not you would like to go?,"no, thanks. maybe another time."
+422,did you go to school today?,"yeah, i went to school today. were you there?"
+423,"yeah, i went to school today. were you there?","no, i didn't go, i've been sick."
+424,"no, i didn't go, i've been sick.",that sucks. did you want the assignments from english class?
+425,that sucks. did you want the assignments from english class?,"that would be nice, thank you."
+426,"that would be nice, thank you.","no problem, you're welcome."
+427,"no problem, you're welcome.",i will be glad to do the same for you when you're sick.
+428,i will be glad to do the same for you when you're sick.,"well, thank you. i hope to see you at school tomorrow."
+429,have you attended school today?,i attended school today. did you?
+430,i attended school today. did you?,i wasn't able to attend school because i was feeling ill.
+431,i wasn't able to attend school because i was feeling ill.,i'm sorry to hear that. would you like the assignments from english class?
+432,i'm sorry to hear that. would you like the assignments from english class?,"i would really appreciate that, thanks."
+433,"i would really appreciate that, thanks.",it's no trouble at all.
+434,it's no trouble at all.,"if you get sick, i'll return the favor."
+435,"if you get sick, i'll return the favor.",thanks. see you at school tomorrow if you feel better.
+436,have you gone to school today?,i went to school today. did you go to school?
+437,i went to school today. did you go to school?,"i couldn't go to school today, i was sick."
+438,"i couldn't go to school today, i was sick.",that's horrible. i'd be happy to give you the assignments from english class.
+439,that's horrible. i'd be happy to give you the assignments from english class.,"thank you very much, that's kind of you."
+440,"thank you very much, that's kind of you.",don't mention it.
+441,don't mention it.,"when you miss a day of school, i'll be happy to give you the english assignments."
+442,did you hear the news?,what happened?
+443,what happened?,our cousin went into labor and had her baby last week.
+444,our cousin went into labor and had her baby last week.,she did? why didn't anyone tell me?
+445,she did? why didn't anyone tell me?,i would've thought that somebody would have told you.
+446,i would've thought that somebody would have told you.,"no, i had no idea."
+447,"no, i had no idea.","well, she did, her baby was 8 pounds 6 ounces."
+448,"well, she did, her baby was 8 pounds 6 ounces.","oh my god, that's great!"
+449,"oh my god, that's great!",are you going to go and visit her and the baby?
+450,are you going to go and visit her and the baby?,i think that i might.
+451,i think that i might.,good! i just thought i'd let you know.
+452,good! i just thought i'd let you know.,thanks for telling me.
+453,have you heard what happened?,heard what?
+454,heard what?,debrah already had her baby.
+455,debrah already had her baby.,i didn't know that.
+456,i didn't know that.,i thought you knew.
+457,i thought you knew.,i honestly didn't know.
+458,i honestly didn't know.,the baby was 8 pounds 6 ounces.
+459,the baby was 8 pounds 6 ounces.,that's good to hear.
+460,that's good to hear.,will you go and visit them?
+461,will you go and visit them?,of course i will.
+462,of course i will.,i just wanted to give you the good news.
+463,i just wanted to give you the good news.,thanks for letting me know.
+464,have you heard the news?,i haven't heard anything.
+465,i haven't heard anything.,debrah had her baby last week.
+466,debrah had her baby last week.,nobody told me.
+467,nobody told me.,i thought you heard.
+468,i thought you heard.,i really wasn't told anything.
+469,i really wasn't told anything.,she was a cute 8 pounds 6 ounces.
+470,she was a cute 8 pounds 6 ounces.,"wow, how exciting."
+471,"wow, how exciting.","i know, you should really go and see her and the baby."
+472,"i know, you should really go and see her and the baby.",of course i will.
+473,of course i will.,i just wanted to let you know what happened.
+474,did you go to school today?,of course. did you?
+475,of course. did you?,"i didn't want to, so i didn't."
+476,"i didn't want to, so i didn't.","that's sad, but have you gone to the movies recently?"
+477,"that's sad, but have you gone to the movies recently?",that's a switch.
+478,that's a switch.,"i'm serious, have you?"
+479,"i'm serious, have you?","no, i haven't. why?"
+480,"no, i haven't. why?",i really want to go to the movies this weekend.
+481,i really want to go to the movies this weekend.,so go then.
+482,so go then.,i really don't want to go by myself.
+483,i really don't want to go by myself.,"well anyway, do you plan on going to school tomorrow?"
+484,"well anyway, do you plan on going to school tomorrow?","no, i think i'm going to go to the movies."
+485,did you make it to school today?,i always do. did you go to school today?
+486,i always do. did you go to school today?,"no, i didn't."
+487,"no, i didn't.","you should have, but have you seen any movies lately?"
+488,"you should have, but have you seen any movies lately?",that was an odd change of subject.
+489,that was an odd change of subject.,"maybe it was, but answer the question."
+490,"maybe it was, but answer the question.","no, not recently."
+491,"no, not recently.",i want to go to see a movie this weekend.
+492,i want to go to see a movie this weekend.,what's stopping you then?
+493,what's stopping you then?,i don't want to go alone.
+494,i don't want to go alone.,"so, will you be at school tomorrow?"
+495,"so, will you be at school tomorrow?","no, i want to go to the movies instead."
+496,did you even bother to go to school today?,"yeah, i went. did you go?"
+497,"yeah, i went. did you go?","no, i didn't feel like it."
+498,"no, i didn't feel like it.","that's nice, have you been to the movies lately?"
+499,"that's nice, have you been to the movies lately?","no, but that was a random change of subject."
+500,"no, but that was a random change of subject.","it may have been random, but have you?"
+501,"it may have been random, but have you?",i haven't lately.
+502,i haven't lately.,i would love to catch a movie this weekend.
+503,i would love to catch a movie this weekend.,"so then, why don't you just go?"
+504,"so then, why don't you just go?",i don't want to see a movie by myself.
+505,i don't want to see a movie by myself.,"okay, so are you going to school tomorrow?"
+506,thanks for coming to see me today.,it's no problem. i was really missing you anyway.
+507,it's no problem. i was really missing you anyway.,i missed you too.
+508,i missed you too.,why haven't you tried to come see me then?
+509,why haven't you tried to come see me then?,i've been really busy.
+510,i've been really busy.,doing what?
+511,doing what?,working.
+512,working.,"i would've come to see you sooner, but i've been busy too."
+513,"i would've come to see you sooner, but i've been busy too.",what have you been doing?
+514,what have you been doing?,i've been working too.
+515,i've been working too.,"well regardless, i'm very happy that you came to see me."
+516,"well regardless, i'm very happy that you came to see me.",i am too.
+517,i'm really glad that you came to see me.,i had to. i was missing you a lot.
+518,i had to. i was missing you a lot.,i was missing you too.
+519,i was missing you too.,"so, why haven't you visited me?"
+520,"so, why haven't you visited me?",i've actually been busy lately.
+521,i've actually been busy lately.,what have you been doing?

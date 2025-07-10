@@ -4,12 +4,79 @@ import os
 import time
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 from torch.nn.utils.rnn import pad_sequence
 import pandas as pd
 import pickle
+import tkinter as tk
+from tkinter import scrolledtext
 
-# --- Vocab sınıfı ---
+
+# --- GUI Class ---
+class ClientGUI():
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Distributed AI Client")
+        self.root.geometry("850x650")
+
+        tk.Label(root, text="Server IP:").pack()
+        self.ip_entry = tk.Entry(root, width=30)
+        self.ip_entry.pack()
+        self.ip_entry.insert(0, "127.0.0.1")
+
+        tk.Label(root, text="Server Port:").pack()
+        self.port_entry = tk.Entry(root, width=10)
+        self.port_entry.pack()
+        self.port_entry.insert(0, "12345")
+
+        self.connect_btn = tk.Button(root, text="Connect to Server", command=self.connect_to_server)
+        self.connect_btn.pack(pady=5)
+
+        # Logs
+        self.log_box = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=100, height=25)
+        self.log_box.pack(pady=10)
+
+        self.cmd_entry = tk.Entry(root, width=80)
+        self.cmd_entry.pack(pady=5)
+        self.send_btn = tk.Button(root, text="Send Command", command=self.send_command)
+        self.send_btn.pack()
+
+        self.client_socket = None
+
+    def log(self, msg):
+        self.log_box.insert(tk.END, msg + "\n")
+        self.log_box.see(tk.END)
+
+    def connect_to_server(self):
+        ip = self.ip_entry.get().strip()
+        try:
+            port = int(self.port_entry.get().strip())
+        except ValueError:
+            self.log("[!] Invalid port")
+            return
+
+        try:
+            self.client_socket = socket.socket()
+            self.client_socket.connect((ip, port))
+            self.log(f"[✓] Connected to {ip}:{port}")
+
+            score = 10.0
+            self.client_socket.sendall(f"SCORE:{score}\n".encode())
+
+            threading.Thread(target=receive_data_and_train, args=(self.client_socket, self.log), daemon=True).start()
+        except Exception as e:
+            self.log(f"[!] Connection error: {e}")
+
+    def send_command(self):
+        cmd = self.cmd_entry.get().strip()
+        if cmd and self.client_socket:
+            try:
+                self.client_socket.sendall((cmd + "\n").encode())
+                self.cmd_entry.delete(0, tk.END)
+            except:
+                self.log("[!] Failed to send command")
+
+
+# --- Vocab and Model Class ---
 class Vocab:
     def __init__(self, specials=["<pad>", "<sos>", "<eos>", "<unk>"]):
         self.token_to_idx = {}
@@ -28,7 +95,6 @@ class Vocab:
                 self.add_token(token)
 
     def __call__(self, tokens):
-        # tokens: iterable of token str
         return [self.token_to_idx.get(token, self.token_to_idx.get("<unk>", 0)) for token in tokens]
 
     def lookup_token(self, idx):
@@ -40,7 +106,7 @@ class Vocab:
     def __getitem__(self, token):
         return self.token_to_idx.get(token, self.token_to_idx.get("<unk>", 0))
 
-# --- Positional Encoding ---
+
 class PositionalEncoding(nn.Module):
     def __init__(self, d_model, dropout=0.1, max_len=5000):
         super().__init__()
@@ -50,67 +116,39 @@ class PositionalEncoding(nn.Module):
         div_term = torch.exp(torch.arange(0, d_model, 2) * (-torch.log(torch.tensor(10000.0)) / d_model))
         pe[:, 0::2] = torch.sin(position * div_term)
         pe[:, 1::2] = torch.cos(position * div_term)
-        pe = pe.unsqueeze(0)  # shape (1, max_len, d_model)
+        pe = pe.unsqueeze(0)
         self.register_buffer('pe', pe)
 
     def forward(self, x):
         x = x + self.pe[:, :x.size(1)]
         return self.dropout(x)
 
-# --- Transformer Chatbot Model ---
+
 class TransformerChatbot(nn.Module):
     def __init__(self, vocab_size, d_model=256, nhead=8, num_layers=3, dim_feedforward=512, dropout=0.1):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, d_model)
         self.pos_encoder = PositionalEncoding(d_model, dropout)
         self.transformer = nn.Transformer(
-            d_model=d_model,
-            nhead=nhead,
-            num_encoder_layers=num_layers,
-            num_decoder_layers=num_layers,
-            dim_feedforward=dim_feedforward,
-            dropout=dropout,
-            batch_first=True
+            d_model=d_model, nhead=nhead,
+            num_encoder_layers=num_layers, num_decoder_layers=num_layers,
+            dim_feedforward=dim_feedforward, dropout=dropout, batch_first=True
         )
         self.fc_out = nn.Linear(d_model, vocab_size)
         self.d_model = d_model
 
     def forward(self, src, tgt):
-        # src: (batch, src_len), tgt: (batch, tgt_len)
         src_emb = self.embedding(src) * torch.sqrt(torch.tensor(self.d_model, dtype=torch.float, device=src.device))
         src_emb = self.pos_encoder(src_emb)
         tgt_emb = self.embedding(tgt) * torch.sqrt(torch.tensor(self.d_model, dtype=torch.float, device=tgt.device))
         tgt_emb = self.pos_encoder(tgt_emb)
-        tgt_mask = self.generate_square_subsequent_mask(tgt.size(1)).to(tgt.device)
-        output = self.transformer(src_emb, tgt_emb, tgt_mask=tgt_mask)
-        output = self.fc_out(output)
-        return output
+        tgt_mask = torch.triu(torch.ones(tgt.size(1), tgt.size(1)) * float('-inf'), diagonal=1).to(tgt.device)
+        out = self.transformer(src_emb, tgt_emb, tgt_mask=tgt_mask)
+        return self.fc_out(out)
 
-    def generate_square_subsequent_mask(self, sz):
-        mask = torch.triu(torch.ones(sz, sz, device='cpu') * float('-inf'), diagonal=1)
-        return mask
 
-# --- Veri ve vocab hazırlama ---
-def load_data_and_prepare_vocab(csv_path):
-    df = pd.read_csv(csv_path)
-    inputs = df["input"].astype(str).tolist()
-    outputs = df["output"].astype(str).tolist()
-
-    tokenized_in = [s.lower().split() for s in inputs]
-    tokenized_out = [["<sos>"] + s.lower().split() + ["<eos>"] for s in outputs]
-
-    vocab = Vocab()
-    vocab.build_vocab(tokenized_in + tokenized_out)
-
-    def encode(sentences):
-        return [torch.tensor(vocab(s), dtype=torch.long) for s in sentences]
-
-    enc_in = pad_sequence(encode(tokenized_in), batch_first=True, padding_value=vocab["<pad>"])
-    enc_out = pad_sequence(encode(tokenized_out), batch_first=True, padding_value=vocab["<pad>"])
-    return enc_in, enc_out, vocab
-
-# --- Eğitim fonksiyonu ---
-def train(model, input_tensor, output_tensor, optimizer, loss_fn, vocab, epochs=20):
+# --- Training & Communication ---
+def train(model, input_tensor, output_tensor, optimizer, loss_fn, vocab, log_func, epochs=20):
     model.train()
     device = next(model.parameters()).device
     input_tensor = input_tensor.to(device)
@@ -125,156 +163,111 @@ def train(model, input_tensor, output_tensor, optimizer, loss_fn, vocab, epochs=
         loss.backward()
         optimizer.step()
         if epoch % 5 == 0:
-            print(f"Epoch {epoch} Loss: {loss.item():.4f}")
+            log_func(f"[{epoch}] Loss: {loss.item():.4f}")
 
-# --- Vocab kaydetme ---
+
+def load_data_and_prepare_vocab(csv_path):
+    df = pd.read_csv(csv_path)
+    inputs = df["input"].astype(str).tolist()
+    outputs = df["output"].astype(str).tolist()
+    tokenized_in = [s.lower().split() for s in inputs]
+    tokenized_out = [["<sos>"] + s.lower().split() + ["<eos>"] for s in outputs]
+
+    vocab = Vocab()
+    vocab.build_vocab(tokenized_in + tokenized_out)
+
+    def encode(sentences):
+        return [torch.tensor(vocab(s), dtype=torch.long) for s in sentences]
+
+    enc_in = pad_sequence(encode(tokenized_in), batch_first=True, padding_value=vocab["<pad>"])
+    enc_out = pad_sequence(encode(tokenized_out), batch_first=True, padding_value=vocab["<pad>"])
+    return enc_in, enc_out, vocab
+
+
 def save_vocab(vocab, path="vocab_client.pkl"):
     with open(path, "wb") as f:
         pickle.dump(vocab, f)
 
-# --- Vocab gönderme: header+size protokolü ---
-def send_vocab(client_socket, vocab_path="vocab_client.pkl"):
+
+def send_file(client_socket, filepath, tag):
     try:
-        # Dosya boyutu
-        filesize = os.path.getsize(vocab_path)
-        filename = os.path.basename(vocab_path)
-        header = f"VOCAB_UPLOAD:{filename}:{filesize}\n"
+        filesize = os.path.getsize(filepath)
+        filename = os.path.basename(filepath)
+        header = f"{tag}:{filename}:{filesize}\n"
         client_socket.sendall(header.encode())
-        # Ardından raw byte gönder
-        with open(vocab_path, "rb") as f:
+        with open(filepath, "rb") as f:
             while True:
                 chunk = f.read(4096)
                 if not chunk:
                     break
                 client_socket.sendall(chunk)
-        print("[✓] Vocab başarıyla gönderildi.")
     except Exception as e:
-        print(f"[!] Vocab gönderme hatası: {e}")
+        print(f"[!] File send error: {e}")
 
-# --- Model gönderme: header+size protokolü ---
-def send_model(client_socket, model_path):
+
+def _handle_training_and_send(client_socket, log_func):
     try:
-        filesize = os.path.getsize(model_path)
-        filename = os.path.basename(model_path)
-        header = f"MODEL_UPLOAD:{filename}:{filesize}\n"
-        client_socket.sendall(header.encode())
-        # Ardından raw byte gönder
-        with open(model_path, "rb") as f:
-            while True:
-                chunk = f.read(4096)
-                if not chunk:
-                    break
-                client_socket.sendall(chunk)
-        print("[✓] Model başarıyla gönderildi.")
+        enc_in, enc_out, vocab = load_data_and_prepare_vocab("received_data.csv")
     except Exception as e:
-        print(f"[!] Model gönderme hatası: {e}")
+        log_func(f"[!] Data error: {e}")
+        return
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = TransformerChatbot(len(vocab)).to(device)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.0005)
+    loss_fn = nn.CrossEntropyLoss(ignore_index=vocab["<pad>"])
 
-# --- Veri alma ve eğitim thread ---
-def receive_data_and_train(client_socket):
+    log_func("[*] Training started...")
+    train(model, enc_in, enc_out, optimizer, loss_fn, vocab, log_func)
+    torch.save(model.state_dict(), "trained_model.pt")
+    save_vocab(vocab)
+    log_func("[✓] Model saved. Sending to server...")
+    send_file(client_socket, "trained_model.pt", "MODEL_UPLOAD")
+    send_file(client_socket, "vocab_client.pkl", "VOCAB_UPLOAD")
+
+
+def receive_data_and_train(client_socket, log_func):
     buffer = ""
     receiving = False
     while True:
         try:
             data = client_socket.recv(4096)
             if not data:
-                print("[!] Server bağlantısı kapandı.")
+                log_func("[!] Server disconnected.")
                 break
             text = data.decode(errors='ignore')
-            # DATA_START ve DATA_END işareti
             if "DATA_START" in text:
                 receiving = True
                 buffer = ""
-                # Eğer DATA_START ve aynı pakette CSV verisi de geldiyse, split edebiliriz:
                 parts = text.split("DATA_START", 1)[1]
-                # parts içinde CSV + belki DATA_END
                 if "DATA_END" in parts:
-                    # CSV tek pakette gelmiş demek
-                    content = parts.split("DATA_END",1)[0]
+                    content = parts.split("DATA_END", 1)[0]
                     buffer += content
                     receiving = False
-                    # Kaydet ve eğitime geç:
                     with open("received_data.csv", "w", encoding="utf-8") as f:
                         f.write(buffer)
-                    print("Veri alındı (tek pakette), eğitim başlıyor...")
-                    _handle_training_and_send(client_socket)
+                    _handle_training_and_send(client_socket, log_func)
                 else:
-                    # CSV parçaları devam edecek
                     buffer += parts
                 continue
             elif receiving:
-                # CSV parçalanarak geliyor
                 if "DATA_END" in text:
-                    content = text.split("DATA_END",1)[0]
+                    content = text.split("DATA_END", 1)[0]
                     buffer += content
                     receiving = False
                     with open("received_data.csv", "w", encoding="utf-8") as f:
                         f.write(buffer)
-                    print("Veri alındı, eğitim başlıyor...")
-                    _handle_training_and_send(client_socket)
+                    _handle_training_and_send(client_socket, log_func)
                 else:
                     buffer += text
-                continue
             else:
-                print(f"[Server]: {text.strip()}")
+                log_func(f"[Server]: {text.strip()}")
         except Exception as e:
-            print(f"[!] Hata in receive_data_and_train: {e}")
+            log_func(f"[!] Receive error: {e}")
             break
 
-def _handle_training_and_send(client_socket):
-    try:
-        enc_in, enc_out, vocab = load_data_and_prepare_vocab("received_data.csv")
-    except Exception as e:
-        print(f"[!] Veri hazırlama hatası: {e}")
-        return
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = TransformerChatbot(len(vocab)).to(device)
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.0005)
-    loss_fn = nn.CrossEntropyLoss(ignore_index=vocab["<pad>"])
-    # Eğitim
-    print("[*] Eğitim başlayacak...")
-    train(model, enc_in, enc_out, optimizer, loss_fn, vocab, epochs=20)
-    # Modeli kaydet
-    model_dir = "trained_models"
-    os.makedirs(model_dir, exist_ok=True)
-    model_path = os.path.join(model_dir, "trained_model.pt")
-    torch.save(model.state_dict(), model_path)
-    print("[✓] Eğitim tamamlandı, model kaydedildi:", model_path)
-    # Vocab kaydet ve gönder
-    vocab_path = "vocab_client.pkl"
-    save_vocab(vocab, vocab_path)
-    send_vocab(client_socket, vocab_path)
-    # Model gönder
-    send_model(client_socket, model_path)
 
-def main():
-    client = socket.socket()
-    SERVER_IP = '127.0.0.1'
-    SERVER_PORT = 12345
-    try:
-        client.connect((SERVER_IP, SERVER_PORT))
-    except Exception as e:
-        print(f"[!] Sunucuya bağlanırken hata: {e}")
-        return
-    print("[✓] Sunucuya bağlanıldı:", SERVER_IP, SERVER_PORT)
-
-
-    score_value = 10.5 
-    header = f"SCORE:{score_value}\n"
-    client.sendall(header.encode())
-
-    threading.Thread(target=receive_data_and_train, args=(client,), daemon=True).start()
-
-    while True:
-        cmd = input("Komut (exit): ").strip()
-        if cmd.lower() == "exit":
-            break
-        try:
-            client.sendall((cmd + "\n").encode())
-        except:
-            break
-
-    client.close()
-    print("Client kapatıldı.")
-
+# --- Main ---
 if __name__ == "__main__":
-    main()
+    root = tk.Tk()
+    app = ClientGUI(root)
+    root.mainloop()

@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from serpapi import GoogleSearch
 import os
 import csv
+import tkinter as tk
 
 SERP_API_KEY = ""
 
@@ -35,7 +36,7 @@ class Vocab:
     def __getitem__(self, token):
         return self.token_to_idx.get(token, self.token_to_idx["<unk>"])
 
-# --- Encoding ---
+# --- Positional Encoding ---
 class PositionalEncoding(nn.Module):
     def __init__(self, d_model, dropout=0.1, max_len=5000):
         super().__init__()
@@ -52,7 +53,7 @@ class PositionalEncoding(nn.Module):
         x = x + self.pe[:, :x.size(1)]
         return self.dropout(x)
 
-# --- Model ---
+# --- Transformer Model ---
 class TransformerChatbot(nn.Module):
     def __init__(self, vocab_size, d_model=256, nhead=8, num_layers=3, dim_feedforward=512, dropout=0.1):
         super().__init__()
@@ -87,7 +88,9 @@ def beam_search(model, vocab, src_sentence, beam_width=3, max_len=20, device='cp
     model.eval()
     src_tokens = torch.tensor(vocab(src_sentence.lower().split())).unsqueeze(0).to(device)
     with torch.no_grad():
-        memory = model.transformer.encoder(model.pos_encoder(model.embedding(src_tokens) * torch.sqrt(torch.tensor(model.d_model, dtype=torch.float, device=device))))
+        memory = model.transformer.encoder(
+            model.pos_encoder(model.embedding(src_tokens) * torch.sqrt(torch.tensor(model.d_model, dtype=torch.float, device=device)))
+        )
     sequences = [([vocab["<sos>"]], 0.0)]
 
     for _ in range(max_len):
@@ -112,8 +115,8 @@ def beam_search(model, vocab, src_sentence, beam_width=3, max_len=20, device='cp
     tokens = [vocab.lookup_token(idx) for idx in best_seq[1:] if idx != vocab["<eos>"]]
     return " ".join(tokens)
 
-def predict(sentence):
-    return beam_search(model, vocab, sentence, beam_width=5, max_len=20, device=device)
+def predict(model, vocab, sentence, beam_width=5, max_len=20, device='cpu'):
+    return beam_search(model, vocab, sentence, beam_width, max_len, device)
 
 # --- Chat Log ---
 def log_chat(user_input, bot_response, logfile="chat_history.csv"):
@@ -121,10 +124,10 @@ def log_chat(user_input, bot_response, logfile="chat_history.csv"):
     with open(logfile, "a", encoding="utf-8", newline="") as f:
         writer = csv.writer(f)
         if not file_exists:
-            writer.writerow(["input", "output"])  # başlıkları ekle
+            writer.writerow(["input", "output"])
         writer.writerow([user_input.strip(), bot_response.strip()])
 
-# --- Web Fonksiyonları ---
+# --- Web Function ---
 def get_weather():
     try:
         r = requests.get("https://wttr.in/?format=3", timeout=5)
@@ -157,27 +160,129 @@ def google_search(query):
     except:
         return "I didn't find result"
 
-# --- Web ---
-def assistant_response(soru):
-    soru_lower = soru.lower()
+# --- RunnerGUI ---
+class RunnerGUI():
+    def __init__(self, model, vocab, device):
+        self.model = model
+        self.vocab = vocab
+        self.device = device
 
-    trigger_keywords = ["bugün", "şu an", "şuan", "nedir", "kaç", "hava", "dolar","kimdir","who","how"]
-    for keyword in trigger_keywords:
-        if keyword in soru_lower:
-            if "weather" in soru_lower:
-                return get_weather()
-            elif "news" in soru_lower:
-                return get_news()
+        self.root = tk.Tk()
+        self.root.title("Runner")
+        self.root.geometry("900x700")
+        self.root.configure(bg="#121212")
 
-    if soru_lower.startswith("ara") or soru_lower.startswith("search"):
-        query = soru.split(" ", 1)[1] if " " in soru else soru
-        return google_search(query)
+        self.chat_log = tk.Text(
+            self.root,
+            state='disabled',
+            wrap='word',
+            bg="#1e1e1e",
+            fg="white",
+            font=("Consolas", 16),
+            insertbackground="white",
+            padx=10,
+            pady=10,
+            relief=tk.FLAT,
+            borderwidth=0
+        )
+        self.chat_log.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-    return predict(soru)
+        # Scrollbar
+        scrollBar = tk.Scrollbar(self.chat_log, bg="#2e2e2e", troughcolor="#2e2e2e", activebackground="#3e3e3e")
+        scrollBar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.chat_log.config(yscrollcommand=scrollBar.set)
+        scrollBar.config(command=self.chat_log.yview)
 
-# --- Ana ---
+        # Tag ayarları
+        self.chat_log.tag_config("user_right", 
+            foreground="#4FC3F7", 
+            font=("Consolas", 16, "bold"), 
+            justify="right", 
+            lmargin1=220, lmargin2=220,
+            rmargin=10,
+            spacing3=10
+        )
+        self.chat_log.tag_config("bot_center", 
+            foreground="#A5D6A7", 
+            font=("Consolas", 16), 
+            justify="left",
+            lmargin1=100, lmargin2=100,
+            rmargin=300,
+            spacing3=10
+        )
+        self.chat_log.tag_config("right_space", font=("Consolas", 4))
+
+        # Entry box
+        self.entry = tk.Entry(
+            self.root,
+            bg="#2c2c2c",
+            fg="white",
+            font=("Consolas", 16),
+            insertbackground="white",
+            relief=tk.FLAT
+        )
+        self.entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=10, pady=10)
+
+        # Send button
+        self.sendButton = tk.Button(
+            self.root,
+            text="Gönder",
+            command=self.send_message,
+            bg="#4CAF50",
+            fg="white",
+            font=("Consolas", 14, "bold"),
+            activebackground="#66BB6A",
+            relief=tk.FLAT,
+            padx=20,
+            pady=5
+        )
+        self.sendButton.pack(side=tk.RIGHT, padx=10, pady=10)
+
+        self.entry.bind("<Return>", self.send_message)
+
+    def assistant_response(self, soru):
+        soru_lower = soru.lower()
+        trigger_keywords = ["bugün", "şu an", "şuan", "nedir", "kaç", "hava", "dolar", "kimdir", "who", "how"]
+        for keyword in trigger_keywords:
+            if keyword in soru_lower:
+                if "weather" in soru_lower:
+                    return get_weather()
+                elif "news" in soru_lower:
+                    return get_news()
+
+        if soru_lower.startswith("ara") or soru_lower.startswith("search"):
+            query = soru.split(" ", 1)[1] if " " in soru else soru
+            return google_search(query)
+
+        return predict(self.model, self.vocab, soru, device=self.device)
+
+    def send_message(self, event=None):
+        user_msg = self.entry.get()
+        if not user_msg.strip():
+            return
+        self.entry.delete(0, tk.END)
+
+        self.chat_log.config(state='normal')
+
+        self.chat_log.insert(tk.END, "\n", "right_space")
+        self.chat_log.insert(tk.END, f"Sen: {user_msg}\n", "user_right")
+
+
+        bot_reply = self.assistant_response(user_msg)
+        self.chat_log.insert(tk.END, f"{bot_reply}\n\n", "bot_center")
+
+        self.chat_log.config(state='disabled')
+        self.chat_log.see(tk.END)
+
+        log_chat(user_msg, bot_reply)
+
+    def run(self):
+        self.root.mainloop()
+
+
+
+# --- Main function ---
 def main():
-    global vocab, model, device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     with open("received_vocabs/vocab_client.pkl", "rb") as f:
@@ -187,16 +292,10 @@ def main():
     model.load_state_dict(torch.load("received_models/trained_model.pt", map_location=device))
     model.eval()
 
-    print("🤖 Chatbot working\n")
+    print("Chatbot working\n")
 
-    while True:
-        text = input("Sen: ")
-        if text.lower() in ["exit", "quit"]:
-            print("Çıkılıyor...")
-            break
-        cevap = assistant_response(text)
-        print("Bot:", cevap)
-        log_chat(text, cevap)
+    app = RunnerGUI(model, vocab, device)
+    app.run()
 
 if __name__ == "__main__":
     main()
